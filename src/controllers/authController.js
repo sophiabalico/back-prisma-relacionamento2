@@ -1,5 +1,5 @@
-import userModel from "../models/userModel";
-import bcrypt from "bcrypt";
+import UserModel from "../models/userModel.js";
+import bcrypt from "bcryptjs";
 
 class AuthController {
   // Listar todos os usuários
@@ -34,7 +34,7 @@ class AuthController {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Criar objeto do usuário
-      const newUser = {
+      const data = {
         name,
         email,
         password: hashedPassword,
@@ -47,10 +47,11 @@ class AuthController {
             message: "Usuário criado com sucesso!",
             user,
         });
-    } catch (error) {}
+    } catch (error) {
         console.error("Erro ao criar um novo usuário:", error);
         res.status(500).json({ error: "Erro ao criar um novo usuário" });
-        }
+      }
+    }
   }
 
 export default new AuthController();
